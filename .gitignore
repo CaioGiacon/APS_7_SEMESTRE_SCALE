@@ -1,0 +1,35 @@
+# ========================
+# Banco de Dados Local
+# ========================
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# ========================
+# Ambientes Virtuais
+# ========================
+venv/
+env/
+
+# ========================
+# Cache e Compilados do Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ========================
+# Testes
+# ========================
+.pytest_cache/
+.coverage
+
+# ========================
+# Variáveis de Ambiente
+# ========================
+.env
+
+# ========================
+# Dataset
+# ========================
+dataset_etanol_toy.csv
