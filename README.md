@@ -1,45 +1,43 @@
-# SCALE (Software for Emergy Algebra Calculations)
+# EmerGraph - S.C.A.L.E
 
 > ⚠️ **Status do Projeto:** 🏗️ Em Construção / Desenvolvimento.
-> Este software é um protótipo em fase de implementação e refinamento de funcionalidades.
+> O EmerGraph é um protótipo em fase ativa de implementação e refinamento.
 
-O **SCALE** é um software dedicado à automação e facilitação de cálculos complexos dentro da **Álgebra Emergética**. O objetivo central é transformar modelos matemáticos e fluxos sistêmicos em uma ferramenta digital acessível, garantindo rigor científico e eficiência no processamento de dados ambientais e econômicos.
+O **EmerGraph - S.C.A.L.E** (Software for Emergy Algebra Calculations) é uma ferramenta desenvolvida para a modelagem, automação e análise de sistemas através da **Álgebra Emergética**. Unindo os conceitos de fluxos de energia à teoria de grafos, o software transforma cálculos matemáticos complexos em uma estrutura digital clara, facilitando a contabilidade ambiental e a avaliação da sustentabilidade sistêmica.
 
 ## 🚀 Tecnologias e Bibliotecas
 
-As escolhas técnicas buscam o equilíbrio entre a robustez no tratamento de dados e a agilidade na entrega de uma interface interativa:
+A stack tecnológica foi selecionada para suportar o processamento de dados e a representação visual de redes complexas:
 
-* **Python:** Linguagem principal utilizada para toda a lógica de negócios e processamento.
-* **Streamlit:** Utilizado para a construção da interface web, permitindo visualização de dados em tempo real.
-* **SQLite:** Banco de dados relacional leve para a persistência e gerenciamento local dos dados inseridos.
-* **Pandas:** Biblioteca fundamental para a manipulação, estruturação e tratamento de tabelas de dados de entrada e saída.
-* **NetworkX:** Utilizada para a modelagem dos fluxos de energia através de **grafos**, essencial para analisar as interconexões e o cálculo de transformidades no sistema.
+* **Python:** Linguagem central para o desenvolvimento da lógica e algoritmos de cálculo.
+* **Streamlit:** Interface web interativa que permite a manipulação de parâmetros e visualização de resultados em tempo real.
+* **NetworkX:** Biblioteca chave para a modelagem dos fluxos sistêmicos como **grafos**, permitindo o cálculo de caminhos, transformidades e a análise da topologia da rede energética.
+* **Pandas:** Utilizado para a estruturação eficiente de dados e tratamento das tabelas de entrada e saída.
+* **SQLite:** Banco de dados relacional para persistência local segura das configurações e dados de álgebra.
 
 ## 🏗️ Arquitetura e Decisões de Projeto
 
-A arquitetura do SCALE foi projetada para atender às exigências de um ambiente acadêmico e profissional, onde a transparência dos cálculos e a facilidade de manutenção são cruciais. O desenvolvimento é inteiramente baseado nos princípios de **Programação Orientada a Objetos (POO)**.
+O sistema é estruturado sob os princípios de **Programação Orientada a Objetos (POO)**, garantindo modularidade e permitindo que novos métodos de álgebra sejam adicionados sem comprometer a estabilidade do núcleo.
 
 ### Fundamentos da Escolha Arquitetural
 
-A separação do sistema em camadas de responsabilidade visa o **desacoplamento**, permitindo que o motor de cálculo evolua independentemente da interface. As decisões principais incluem:
+A separação em camadas garante que a lógica científica (o motor de cálculo) esteja isolada da interface de usuário e do armazenamento:
 
 1.  **Padrão Facade (Fachada):**
-    - **Motivação:** A Álgebra Emergética possui múltiplos processos internos (grafos, matrizes, persistência). A *Facade* centraliza essas complexidades em uma interface única. Isso permite que o `Streamlit` (camada de apresentação) solicite operações complexas sem precisar conhecer os detalhes internos do motor de cálculo.
+    - **Motivação:** Como a Álgebra Emergética envolve múltiplos processos internos, a *Facade* atua como um ponto único de entrada. Isso simplifica a comunicação com o `Streamlit`, mantendo o código da interface focado na experiência do usuário.
 2.  **Database Manager (Gerenciador de Banco de Dados):**
-    - **Motivação:** Seguindo o princípio de responsabilidade única, toda a comunicação com o SQLite é isolada em uma classe gestora. Isso protege a integridade dos dados e facilita a migração ou expansão do banco no futuro.
-3.  **Abstração e POO:**
-    - O uso de classes para representar componentes do sistema garante que o código seja modular. Isso facilita a auditoria dos cálculos (importante para validação acadêmica) e a reutilização de componentes em diferentes módulos do software.
+    - **Motivação:** Centraliza todas as operações SQL, isolando a complexidade das consultas e garantindo que a lógica de persistência siga o princípio de responsabilidade única (SRP).
+3.  **Modelagem por Grafos (NetworkX):**
+    - **Motivação:** Representar os fluxos como grafos permite identificar ciclos de feedback e dependências estruturais que são fundamentais na teoria de emergia, indo além das capacidades de planilhas convencionais.
 
 ## ⚙️ Como Executar o Projeto (Ambiente de Desenvolvimento)
-
-*Nota: Como o projeto está em construção, certifique-se de estar na branch principal.*
 
 ### Instalação
 
 1.  Clone o repositório:
     ```bash
-    git clone [https://github.com/seu-usuario/scale.git](https://github.com/seu-usuario/scale.git)
-    cd scale
+    git clone [https://github.com/CaioGiacon/APS_7_SEMESTRE_SCALE.git](https://github.com/CaioGiacon/APS_7_SEMESTRE_SCALE.git)
+    cd APS_7_SEMESTRE_SCALE
     ```
 
 2.  Crie e ative um ambiente virtual:
@@ -58,7 +56,7 @@ A separação do sistema em camadas de responsabilidade visa o **desacoplamento*
 
 ### Execução
 
-Para rodar o protótipo atual:
+Para iniciar o protótipo:
 ```bash
 streamlit run app.py
 ```
