@@ -32,3 +32,10 @@ class GerenciadorDeBanco:
             cursor = conexao.cursor()
             cursor.execute('DELETE FROM PRODUTOS;')
             cursor.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'produtos';")
+
+    def select_query(self, nome_do_produto):
+        with self._conectar_banco() as conexao:
+            df = pd.read_sql_query('SELECT * FROM produtos WHERE produto = ?', con=conexao, params=(nome_do_produto,))
+            return df
+        
+gerenciador = GerenciadorDeBanco()
