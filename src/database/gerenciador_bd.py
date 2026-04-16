@@ -4,19 +4,9 @@ import pandas as pd
 class GerenciadorDeBanco:
     def __init__(self):
         self.caminho_banco = 'data/data.db'
-        self.conexao = sqlite3.connect(self.caminho_banco)
-        self.cursor = self.conexao.cursor()
-        self._criar_tabela_inicial()
 
-    def _criar_tabela_inicial(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS produtos 
-                           (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                           origem TEXT NOT NULL,
-                           destino TEXT NOT NULL,
-                           produto TEXT NOT NULL,
-                           quantidade_energia FLOAT NOT NULL,
-                           tipo_fluxo TEXT NOT NULL)''')
-        self.conexao.commit()
+    def _conectar_banco(self):
+        return sqlite3.connect(self.caminho_banco)
 
     def ler_arquivo_do_usuario(self, arquivo):
         try:
@@ -34,11 +24,11 @@ class GerenciadorDeBanco:
             print(f'Ocorreu um erro inesperado: {e}')
     
     def enviar_registros_para_sqlite(self, dataframe):
-        dataframe.to_sql('produtos', self.conexao, if_exists='replace',index=False)
+        with self._conectar_banco() as conexao:  
+            dataframe.to_sql('produtos', conexao, if_exists='append',index=False)
         
-
-    def remover_registro(self):
-        self.cursor.execute('DELETE FROM PRODUTOS;')
-        self.cursor.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'produtos';")
-        self.conexao.commit()
-        
+    def remover_registros(self):
+        with self._conectar_banco() as conexao:
+            cursor = conexao.cursor()
+            cursor.execute('DELETE FROM PRODUTOS;')
+            cursor.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'produtos';")
