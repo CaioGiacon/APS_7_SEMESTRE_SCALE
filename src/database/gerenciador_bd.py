@@ -25,7 +25,7 @@ class GerenciadorDeBanco:
     
     def enviar_registros_para_sqlite(self, dataframe):
         with self._conectar_banco() as conexao:  
-            dataframe.to_sql('produtos', conexao, if_exists='append',index=False)
+            dataframe.to_sql('produtos', conexao, if_exists='replace',index=False)
         
     def remover_registros(self):
         with self._conectar_banco() as conexao:
@@ -35,7 +35,16 @@ class GerenciadorDeBanco:
 
     def select_query(self, nome_do_produto):
         with self._conectar_banco() as conexao:
-            df = pd.read_sql_query('SELECT * FROM produtos WHERE produto = ?', con=conexao, params=(nome_do_produto,))
+            df = pd.read_sql_query('''
+                                   WITH RECURSIVE grafo AS (
+                                        SELECT * FROM produtos WHERE produto = ?
+                                        UNION ALL
+                                        
+                                        SELECT p.* FROM produtos p 
+                                        INNER JOIN grafo g ON p.destino = g.origem
+                                   )
+                                   SELECT * FROM grafo;
+                                ''', con=conexao, params=(nome_do_produto,))
             return df
         
 gerenciador = GerenciadorDeBanco()
