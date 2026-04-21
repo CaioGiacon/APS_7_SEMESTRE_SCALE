@@ -21,3 +21,5 @@ class ScaleFacade:
         
         grafo = self.modelador.construir_grafo(df)
         return grafo
+    
+facade = ScaleFacade()
