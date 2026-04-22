@@ -13,9 +13,6 @@ class ScaleFacade:
         df = self.gerenciador.ler_arquivo_do_usuario(arquivo_csv)
         self.gerenciador.enviar_registros_para_sqlite(df)
 
-    def excluir_arquivo(self):
-        self.gerenciador.remover_registros()
-
     def buscar_registros(self, nome_do_produto):
         df = self.gerenciador.select_query(nome_do_produto)
 

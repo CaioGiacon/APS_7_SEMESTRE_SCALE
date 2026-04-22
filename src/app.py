@@ -55,8 +55,8 @@ st.set_page_config(page_title='EmerGraph - S.C.A.L.E', page_icon='⚡', layout='
 st.write('---') 
 st.subheader('PROCURAR PRODUTO')
 
-nome_produto = st.text_input('Digite o nome do produto para consulta:').title()
-
+nome_produto = st.text_input('Digite o nome do produto para consulta:')
+st.write(nome_produto)
 if nome_produto:
     grafo_resultado = app.buscar_registros(nome_produto)
     
@@ -78,6 +78,5 @@ if nome_produto:
         total = app.formatar_total_emergia(valor_emergetico)
         
         st.metric(label=f'Valor Emergético Total do {nome_produto}', value=total)
-        
     else:
         st.error('Produto não encontrado no banco de dados. Tente outro nome.')
