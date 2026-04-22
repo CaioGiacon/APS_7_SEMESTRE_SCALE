@@ -1,6 +1,6 @@
 class CalculadoraEmergetica:
     def __init__(self):
-        pass
+        self.cache = {}
 
     def verificar_no_atual(self, grafo, produto_alvo):
         for alvo in grafo.edges(data=True):
@@ -8,31 +8,44 @@ class CalculadoraEmergetica:
                 return alvo[1]
         return None
 
-    def calcular_fluxo(self, grafo, no_atual):
-        valor_total = 0
-        predecessores = list(grafo.predecessors(no_atual))
+    def calcular_fluxo(self, grafo, no_atual, no_visitado=None):
+        if no_visitado is None:
+            no_visitado = set()
         
-        for predecessor in predecessores:
+        if no_atual in no_visitado:
+            raise ValueError(f'Ciclo detectado no nó: {no_atual}')
+        
+        if no_atual in self.cache:
+            return self.cache[no_atual]
+    
+        
+        no_visitado.add(no_atual)
+        valor_total = 0
+        
+        for predecessor in list(grafo.predecessors(no_atual)):
             dados_da_aresta = grafo[predecessor][no_atual]
             tipo = dados_da_aresta['tipo_fluxo']
+            quantidade = dados_da_aresta['quantidade']
+            transformidade = dados_da_aresta.get('transformidade', 1)
             
             if tipo == 'Entrada_Externa':
-                valor_total += dados_da_aresta['quantidade']
+                valor_total += quantidade * transformidade
             else:
-                valor_do_passado = self.calcular_fluxo(grafo, predecessor)
+                valor_do_passado = self.calcular_fluxo(grafo, predecessor, no_visitado.copy())
                 
                 if tipo == 'Normal' or tipo == 'Co_Produto':
-                    valor_total += valor_do_passado
+                    valor_total += valor_do_passado * transformidade
                     
                 elif tipo == 'Split':
-                    total_produzido = 0 
-                    for saida in grafo.out_edges(predecessor, data=True):
-                        total_produzido += saida[2]['quantidade']
-                        
-                    if total_produzido > 0:
-                        fracao = dados_da_aresta['quantidade'] / total_produzido
-                        valor_total += valor_do_passado * fracao
+                    total_produzido = sum(
+                        saida[2]['quantidade']
+                        for saida in grafo.out_edges(predecessor, data=True)
+                    )
 
+                    fracao = quantidade / total_produzido
+
+                    valor_total += valor_do_passado * fracao * transformidade
+        self.cache[no_atual] = valor_total
         return valor_total
 
 calculador_de_emergia = CalculadoraEmergetica()

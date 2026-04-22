@@ -7,6 +7,19 @@ class GerenciadorDeBanco:
 
     def _conectar_banco(self):
         return sqlite3.connect(self.caminho_banco)
+    
+    def criar_tabela(self):
+        with self._conectar_banco() as conexao:
+            cursor = conexao.cursor()
+            cursor.execute('''
+                           CREATE TABLE IF NOT EXISTS produtos(
+                           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                           origem TEXT NOT NULL,
+                           destino TEXT NOT NULL,
+                           produto TEXT NOT NULL,
+                           quantidade INTEGER NOT NULL,
+                           tipo_fluxo TEXT NOT NULL,
+                           transformidade TEXT NOT NULL);''')
 
     def ler_arquivo_do_usuario(self, arquivo):
         try:
@@ -26,13 +39,7 @@ class GerenciadorDeBanco:
     def enviar_registros_para_sqlite(self, dataframe):
         with self._conectar_banco() as conexao:  
             dataframe.to_sql('produtos', conexao, if_exists='replace',index=False)
-        
-    def remover_registros(self):
-        with self._conectar_banco() as conexao:
-            cursor = conexao.cursor()
-            cursor.execute('DELETE FROM PRODUTOS;')
-            cursor.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'produtos';")
-
+                
     def select_query(self, nome_do_produto):
         with self._conectar_banco() as conexao:
             df = pd.read_sql_query('''

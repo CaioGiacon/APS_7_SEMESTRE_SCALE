@@ -32,4 +32,4 @@ __pycache__/
 # ========================
 # Dataset
 # ========================
-dataset_etanol_toy.csv
+data/dataset/

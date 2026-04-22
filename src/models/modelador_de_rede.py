@@ -9,7 +9,7 @@ class ModeladorRede:
             dataframe,
             source='origem',
             target='destino',
-            edge_attr=['produto', 'quantidade', 'tipo_fluxo'],
+            edge_attr=['produto', 'quantidade', 'tipo_fluxo', 'transformidade'],
             create_using=nx.DiGraph()
         )
         return self.grafo
