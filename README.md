@@ -2,6 +2,7 @@
 **Software for Emergy Algebra Calculations**
 
 > ⚠️ **Status do Projeto:** 🏗️ Finalizado / Aguardando Avaliação.
+
 > Importante frisar que o EmerGraph - S.C.A.L.E é um protótipo.
 
 O **EmerGraph - S.C.A.L.E** (Software for Emergy Algebra Calculations) é uma ferramenta desenvolvida para a modelagem, automação e análise de sistemas através da **Álgebra Emergética**. Unindo os conceitos de fluxos de energia à teoria de grafos, o software transforma cálculos matemáticos complexos em uma estrutura digital clara, facilitando a contabilidade ambiental e a avaliação da sustentabilidade sistêmica.
