@@ -90,11 +90,11 @@ Passo a passo para rodar os testes via Docker:
 Alternativa (Para Desenvolvimento Local):
 Caso queira desenvolver e testar fora do Docker:
 
-   1. Crie e ative um ambiente virtual (python -m venv venv).
+   1. Crie e ative um ambiente virtual (```python -m venv venv```).
 
-   2. Instale os requisitos: pip install -r requirements.txt.
+   2. Instale os requisitos: ```pip install -r requirements.txt```.
 
-   3. Rode o comando pytest na raiz do projeto.
+   3. Rode o comando ```pytest``` na raiz do projeto.
 
 ## 👨‍💻 Autor
 Caio Giacon
