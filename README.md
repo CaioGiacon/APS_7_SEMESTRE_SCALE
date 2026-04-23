@@ -77,7 +77,7 @@ O protótipo acompanha uma suíte de testes unitários desenvolvida em Pytest pa
 
 Como a aplicação está conteinerizada, você pode rodar os testes de forma isolada sem precisar instalar dependências na sua máquina.
 
-Passo a passo para rodar os testes via Docker:
+# **Passo a passo para rodar os testes via Docker**:
 
    1. Certifique-se de que a imagem scale-app já foi construída (passo 2 da seção anterior).
 
@@ -87,7 +87,7 @@ Passo a passo para rodar os testes via Docker:
    ```
    (A flag --rm garante que este container de teste seja destruído automaticamente após a execução dos testes, mantendo seu ambiente limpo).
 
-Alternativa (Para Desenvolvimento Local):
+# **Alternativa (Para Desenvolvimento Local)**:
 Caso queira desenvolver e testar fora do Docker:
 
    1. Crie e ative um ambiente virtual (```python -m venv venv```).
