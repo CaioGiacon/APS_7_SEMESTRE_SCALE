@@ -82,9 +82,9 @@ Passo a passo para rodar os testes via Docker:
    1. Certifique-se de que a imagem scale-app já foi construída (passo 2 da seção anterior).
 
    2. Execute o comando abaixo no seu terminal. Ele criará um container temporário apenas para rodar as validações:
-    ```bash
+   ```bash
     docker run --rm scale-app pytest
-    ```
+   ```
    (A flag --rm garante que este container de teste seja destruído automaticamente após a execução dos testes, mantendo seu ambiente limpo).
 
 Alternativa (Para Desenvolvimento Local):
