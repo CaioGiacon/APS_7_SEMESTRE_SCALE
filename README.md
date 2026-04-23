@@ -2,6 +2,7 @@
 **Software for Emergy Algebra Calculations**
 
 > ⚠️ **Status do Projeto:** 🏗️ Finalizado / Aguardando Avaliação.
+
 > Importante frisar que o EmerGraph - S.C.A.L.E é um protótipo.
 
 O **EmerGraph - S.C.A.L.E** (Software for Emergy Algebra Calculations) é uma ferramenta desenvolvida para a modelagem, automação e análise de sistemas através da **Álgebra Emergética**. Unindo os conceitos de fluxos de energia à teoria de grafos, o software transforma cálculos matemáticos complexos em uma estrutura digital clara, facilitando a contabilidade ambiental e a avaliação da sustentabilidade sistêmica.
@@ -9,14 +10,19 @@ O **EmerGraph - S.C.A.L.E** (Software for Emergy Algebra Calculations) é uma fe
 ## ✨ Funcionalidades Principais
 
 * **Importação Dinâmica de Dados:** Leitura de arquivos CSV fornecidos pelo usuário, com tratamento robusto de erros (codificação, estrutura, permissões).
+  
 * **Persistência Relacional:** Armazenamento automatizado e centralizado dos registros de fluxo utilizando banco de dados SQLite.
+  
 * **Modelagem Topológica:** Construção de redes em formato de grafos direcionados, rastreando origem, destino, tipo de fluxo e transformidade dos produtos.
+  
 * **Motor de Cálculo Avançado:**
   * Processamento recursivo dos valores emergéticos na rede.
   * Sistema de *cache* integrado para otimização de varreduras em nós já calculados.
   * Detecção de ciclos (loopbacks) estruturais para prevenir falhas de cálculo.
   * Suporte a regras de negócio baseadas no tipo de fluxo (`Normal`, `Entrada_Externa`, `Co_Produto`, `Split`).
+    
 * **Visualização Interativa:** Geração de diagramas tipo Sankey para análise visual clara do balanço de energia e massa da rede.
+  
 * **Formatação Científica:** Apresentação inteligente de resultados em notação científica para grandezas emergéticas elevadas (seJ).
 
 ## 🚀 Tecnologias e Bibliotecas
@@ -38,8 +44,10 @@ O sistema é estruturado sob os princípios de **Programação Orientada a Objet
 
 1. **Padrão Facade (Fachada):**
    A classe `ScaleFacade` atua como um ponto único de entrada orquestrando o gerenciador de banco de dados, o modelador e a calculadora. Isso simplifica a comunicação com o Streamlit, mantendo a interface isolada da lógica de negócios pesada.
+
 2. **Database Manager (Gerenciador de Banco):**
    Centraliza todas as operações SQL, incluindo o uso de *Common Table Expressions (CTEs) recursivas* para montagem ágil das sub-redes dos grafos.
+
 3. **Modelagem por Grafos (NetworkX):**
    Representar fluxos como grafos direcionados permite varrer precursores sistematicamente, identificar gargalos energéticos e aplicar validações matemáticas (como checagem DAG - Directed Acyclic Graph) exclusivas à teoria de emergia.
 
@@ -69,24 +77,24 @@ O protótipo acompanha uma suíte de testes unitários desenvolvida em Pytest pa
 
 Como a aplicação está conteinerizada, você pode rodar os testes de forma isolada sem precisar instalar dependências na sua máquina.
 
-Passo a passo para rodar os testes via Docker:
+## **Passo a passo para rodar os testes via Docker**:
 
-    1. Certifique-se de que a imagem scale-app já foi construída (passo 2 da seção anterior).
+   1. Certifique-se de que a imagem scale-app já foi construída (passo 2 da seção anterior).
 
-    2. Execute o comando abaixo no seu terminal. Ele criará um container temporário apenas para rodar as validações:
-    ```bash
+   2. Execute o comando abaixo no seu terminal. Ele criará um container temporário apenas para rodar as validações:
+   ```bash
     docker run --rm scale-app pytest
-    ```
-    (A flag --rm garante que este container de teste seja destruído automaticamente após a execução dos testes, mantendo seu ambiente limpo).
+   ```
+   (A flag --rm garante que este container de teste seja destruído automaticamente após a execução dos testes, mantendo seu ambiente limpo).
 
-Alternativa (Para Desenvolvimento Local):
+## **Alternativa (Para Desenvolvimento Local)**:
 Caso queira desenvolver e testar fora do Docker:
 
-    1. Crie e ative um ambiente virtual (python -m venv venv).
+   1. Crie e ative um ambiente virtual (```python -m venv venv```).
 
-    2. Instale os requisitos: pip install -r requirements.txt.
+   2. Instale os requisitos: ```pip install -r requirements.txt```.
 
-    3. Rode o comando pytest na raiz do projeto.
+   3. Rode o comando ```pytest``` na raiz do projeto.
 
 ## 👨‍💻 Autor
 Caio Giacon
