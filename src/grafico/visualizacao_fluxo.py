@@ -1,50 +1,99 @@
 import plotly.graph_objects as go
+import networkx as nx
 
-class VisualizadorSankey:
-    def __init__(self, altura=500, tamanho_fonte=12):
+class VisualizadorGrafoRede:
+    def __init__(self, altura=600, tamanho_fonte=14):
         self.altura = altura
         self.tamanho_fonte = tamanho_fonte
 
-    def _extrair_dados_do_grafo(self, grafo):
-        nos = list(grafo.nodes())
-        no_para_indice = {no: i for i, no in enumerate(nos)}
+    def gerar_grafico(self, grafo, titulo="Grafo de Energia e Massa da Rede"):
+        posicoes = nx.spring_layout(grafo, seed=42)
 
-        origens = []
-        alvos = []
-        valores = []
-        nomes_produtos = []
+        edge_x, edge_y = [], []
+        middle_x, middle_y, middle_hover_text = [], [], []
 
         for origem, destino, dados in grafo.edges(data=True):
-            origens.append(no_para_indice[origem])
-            alvos.append(no_para_indice[destino])
-            valores.append(dados['quantidade']) 
-            nomes_produtos.append(dados['produto'])
+            x0, y0 = posicoes[origem]
+            x1, y1 = posicoes[destino]
+            edge_x.extend([x0, x1, None])
+            edge_y.extend([y0, y1, None])
+            
+            middle_x.append((x0 + x1) / 2)
+            middle_y.append((y0 + y1) / 2)
+            
+            produto = dados.get('produto', 'Desconhecido')
+            quantidade = dados.get('quantidade', 0)
+            texto = f"<b>{origem} -> {destino}</b><br>Produto: {produto}<br>Quantidade: {quantidade}"
+            middle_hover_text.append(texto)
 
-        return nos, origens, alvos, valores, nomes_produtos
+        trace_arestas = go.Scatter(
+            x=edge_x, y=edge_y,
+            line=dict(width=1.5, color='#888'),
+            hoverinfo='none',
+            mode='lines'
+        )
 
-    def gerar_grafico(self, grafo, titulo="Fluxo de Energia e Massa da Rede"):
-        nos, origens, alvos, valores, nomes_produtos = self._extrair_dados_do_grafo(grafo)
+        trace_meio_arestas = go.Scatter(
+            x=middle_x, y=middle_y,
+            mode='markers',
+            hoverinfo='text',
+            text=middle_hover_text,
+            marker=dict(size=0.1, color='rgba(0,0,0,0)'),
+            showlegend=False
+        )
 
-        fig = go.Figure(data=[go.Sankey(
-            node=dict(
-                pad=15,
-                thickness=20,
-                line=dict(color="black", width=0.5),
-                label=nos,
+        node_x, node_y, node_text = [], [], []
+
+        for no, dados in grafo.nodes(data=True):
+            x, y = posicoes[no]
+            node_x.append(x)
+            node_y.append(y)
+        
+            valor = dados.get('emergia') or dados.get('valor') or dados.get('quantidade')
+            
+            if valor is not None:
+                if isinstance(valor, (int, float)):
+                    label = f"<b>{no}</b><br>({valor:.2e})"
+                else:
+                    label = f"<b>{no}</b><br>({valor})"
+            else:
+                label = f"<b>{no}</b>"
+            
+            node_text.append(label)
+
+        trace_nos = go.Scatter(
+            x=node_x, y=node_y,
+            mode='markers+text',
+            hoverinfo='text',
+            text=node_text,
+            textposition="top center",
+            textfont=dict(
+                family="Arial Black, sans-serif",
+                size=self.tamanho_fonte,
+                color="black"
             ),
-            link=dict(
-                source=origens,
-                target=alvos,
-                value=valores,
-                label=nomes_produtos
+            marker=dict(
+                color='#1f77b4',
+                size=35, 
+                line=dict(width=2, color='white')
             )
-        )])
+        )
 
-        fig.update_layout(
-            title_text=titulo, 
-            font_size=self.tamanho_fonte,
-            height=self.altura
-        )  
+        fig = go.Figure(data=[trace_arestas, trace_meio_arestas, trace_nos],
+                        layout=go.Layout(
+                            title=dict(
+                                text=titulo,
+                                font=dict(size=18)
+                            ),
+                            showlegend=False,
+                            hovermode='closest',
+                            margin=dict(b=20, l=5, r=5, t=60),
+                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            height=self.altura,
+                            plot_bgcolor="white"
+                        ))
+        
         return fig
 
-visualizador = VisualizadorSankey()
+visualizador = VisualizadorGrafoRede(altura=700)
