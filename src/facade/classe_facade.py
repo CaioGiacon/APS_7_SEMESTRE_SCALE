@@ -1,6 +1,7 @@
 from database.gerenciador_bd import gerenciador
 from models.modelador_de_rede import modelador
 from core.calculadora import calculador_de_emergia
+from grafico.visualizacao_fluxo import visualizador 
 import math
 
 class ScaleFacade:
@@ -8,6 +9,7 @@ class ScaleFacade:
         self.gerenciador = gerenciador
         self.modelador = modelador
         self.calculadora = calculador_de_emergia
+        self.visualizador = visualizador
 
     def salvar_arquivo(self, arquivo_csv):
         df = self.gerenciador.ler_arquivo_do_usuario(arquivo_csv)
@@ -31,5 +33,9 @@ class ScaleFacade:
         expoente = int(math.floor(math.log10(emergia_total)))
         mantissa = emergia_total / (10 ** expoente)
         return f"{mantissa:.2f} × 10^{expoente} seJ"
+    
+    def plotar_grafico(self, grafo, titulo):
+        grafico = self.visualizador.gerar_grafico(grafo, titulo)
+        return grafico
     
 facade = ScaleFacade()

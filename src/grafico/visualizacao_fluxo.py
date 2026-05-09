@@ -1,14 +1,14 @@
 import plotly.graph_objects as go
 import networkx as nx
+import pandas as pd
 
 class VisualizadorGrafoRede:
     def __init__(self, altura=600, tamanho_fonte=14):
         self.altura = altura
         self.tamanho_fonte = tamanho_fonte
 
-    def gerar_grafico(self, grafo, titulo="Grafo de Energia e Massa da Rede"):
-        posicoes = nx.spring_layout(grafo, seed=42)
-
+    def gerar_grafico(self, grafo, titulo):
+        posicoes = nx.spring_layout(grafo, k=0.5, iterations=50, seed=42)
         edge_x, edge_y = [], []
         middle_x, middle_y, middle_hover_text = [], [], []
 

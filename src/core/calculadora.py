@@ -13,12 +13,11 @@ class CalculadoraEmergetica:
             no_visitado = set()
         
         if no_atual in no_visitado:
-            raise ValueError(f'Ciclo detectado no nó: {no_atual}')
+            return 0
         
         if no_atual in self.cache:
             return self.cache[no_atual]
     
-        
         no_visitado.add(no_atual)
         valor_total = 0
         

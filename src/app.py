@@ -70,7 +70,7 @@ if nome_produto:
             st.json(dicionario_interno)
 
         st.subheader('Visualização da Topologia da Rede')
-        figura_grafo = visualizador.gerar_grafico(grafo_resultado, titulo=f'Estrutura de Fluxos: {nome_produto}') 
+        figura_grafo = app.plotar_grafico(grafo_resultado, titulo=f'Estrutura de Fluxos: {nome_produto}') 
         st.plotly_chart(figura_grafo, use_container_width=True)
         
         st.write('---')
@@ -78,7 +78,7 @@ if nome_produto:
         st.subheader('Métricas')
         valor_emergetico = app.calculo_emergetico(grafo_resultado, nome_produto)
         total = app.formatar_total_emergia(valor_emergetico)
-        st.metric(label="Emergia Total", value=f"{total}")
+        st.metric(label='Emergia Total', value=f'{total}')
 
         st.write('---')    
     else:

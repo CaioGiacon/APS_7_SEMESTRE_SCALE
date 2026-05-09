@@ -43,15 +43,28 @@ class GerenciadorDeBanco:
     def select_query(self, nome_do_produto):
         with self._conectar_banco() as conexao:
             df = pd.read_sql_query('''
-                                   WITH RECURSIVE grafo AS (
-                                        SELECT * FROM produtos WHERE produto = ?
+                                WITH RECURSIVE grafo AS (
+                                        SELECT 
+                                            p.*, 
+                                            ',' || p.origem || ',' AS caminho_visitado
+                                        FROM produtos p 
+                                        WHERE p.produto = ?
+                                    
                                         UNION ALL
-                                        
-                                        SELECT p.* FROM produtos p 
+                                        SELECT 
+                                            p.*, 
+                                            g.caminho_visitado || p.origem || ',' 
+                                        FROM produtos p 
                                         INNER JOIN grafo g ON p.destino = g.origem
-                                   )
-                                   SELECT * FROM grafo;
+                                        WHERE instr(g.caminho_visitado, ',' || p.origem || ',') = 0
+                                )
+                                SELECT * FROM grafo;
                                 ''', con=conexao, params=(nome_do_produto,))
+            
+            # Limpeza: remove a coluna auxiliar do DataFrame para não sujar o resultado final
+            if 'caminho_visitado' in df.columns:
+                df = df.drop(columns=['caminho_visitado'])
+                
             return df
-        
+
 gerenciador = GerenciadorDeBanco()
