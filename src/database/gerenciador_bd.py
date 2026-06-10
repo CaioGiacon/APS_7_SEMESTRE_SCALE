@@ -61,7 +61,6 @@ class GerenciadorDeBanco:
                                 SELECT * FROM grafo;
                                 ''', con=conexao, params=(nome_do_produto,))
             
-            # Limpeza: remove a coluna auxiliar do DataFrame para não sujar o resultado final
             if 'caminho_visitado' in df.columns:
                 df = df.drop(columns=['caminho_visitado'])
                 
