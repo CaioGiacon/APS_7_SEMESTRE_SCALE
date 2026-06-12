@@ -1,7 +1,7 @@
 # ⚡ EmerGraph - S.C.A.L.E
 **Software for Emergy Algebra Calculations**
 
-> ⚠️ **Status do Projeto:** 🏗️ Finalizado / Aguardando Avaliação.
+> ⚠️ **Status do Projeto:** 🏗️ Finalizado / Nota Final do professor: 9,5
 
 > Importante frisar que o EmerGraph - S.C.A.L.E é um protótipo.
 
